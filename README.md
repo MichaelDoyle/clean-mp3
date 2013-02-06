@@ -9,7 +9,7 @@ Features
 * Remove unrelated files (m3u, log, cue, sfv, nfo, pls, html, html)
 * Remove unwanted MP3 ID3 tags including lyrics, comments, url frames, user text frames and file ids
 * Strip album art and replace with 150x150 thumbnail based on folder artwork (e.g. folder.jpg)
-* Rename MP33 files as "Track Number - Track Title"
+* Rename MP3 files as "Track Number - Track Title"
 
 Usage
 =========
