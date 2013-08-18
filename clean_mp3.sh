@@ -58,8 +58,8 @@ do
   dir=`dirname $i`;
 
   # first convert to v2.4
-  echo -e "`date`: eyeD3 --no-color --to-v2.4 --remove-images \"$i\"\n"
-  eyeD3 --no-color --to-v2.4 --remove-images "$i";
+  echo -e "`date`: eyeD3 --no-color --to-v2.4 --remove-all-images \"$i\"\n"
+  eyeD3 --no-color --to-v2.4 --remove-all-images "$i";
 
   # add image tag from current dir
   for j in `find $dir -maxdepth 1 -iname "*.jpg"`; 
@@ -76,12 +76,12 @@ do
     done;
   done;
 
-  cmd="eyeD3 --no-color --remove-lyrics --remove-comments --set-url-frame=\"WCOM:\"  --set-url-frame=\"WXXX:\" --no-tagging-time-frame ";
+  cmd="eyeD3 --no-color --remove-all-lyrics --remove-all-comments --url-frame=\"WCOM:\" --user-url-frame=\"WXXX:\" --remove-frame PRIV";
 
   # remove all user text frames
   for l in `eyeD3 --no-color "$i" | grep "UserTextFrame" | cut -d":" -f3 | cut -d"]" -f1 | sed -e 's/^ //g'`;
   do
-    cmd="$cmd --set-user-text-frame=\"$l:\" ";
+    cmd="$cmd --user-text-frame=\"$l:\" ";
   done
 
   # remove unique file ids
@@ -90,12 +90,12 @@ do
     cmd="$cmd --unique-file-id=\"$m:\" ";
   done
  
-  cmd="$cmd\"$i\"";
+  cmd="$cmd \"$i\"";
   echo -e "`date`: $cmd\n";
   eval $cmd;
 
-  #rename -- TODO: verify the tags some how first
-  echo -e "eyeD3 --no-color --no-tagging-time-frame --rename=\"%n - %t\" \"$i\""
-  eyeD3 --no-color --no-tagging-time-frame --rename="%n - %t" "$i"
+  #rename -- prob only want to do this if we can verify the tags some how
+  echo -e "eyeD3 --no-color --rename \"\$track:num - \$title\" \"$i\""
+  eyeD3 --no-color --rename="\$track:num - \$title" "$i"
 
 done
